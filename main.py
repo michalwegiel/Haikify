@@ -3,6 +3,8 @@ import io
 import streamlit as st
 from PIL import Image
 
+from image_classify import classify, classify_images
+
 
 def main():
     st.set_page_config(page_title="Haikify", page_icon="assets/haikify_icon.jfif", layout="centered")
@@ -15,7 +17,7 @@ def main():
 
     for i, col in enumerate(cols, start=1):
         with col:
-            st.write(f"**{i}{['st','nd','rd'][i-1]} image**")
+            st.write(f"**{i}{['st', 'nd', 'rd'][i - 1]} image**")
             file = st.file_uploader(
                 "Choose an image…",
                 type=["jpg", "jpeg", "png"],
@@ -36,8 +38,9 @@ def main():
 
     btn = st.button("Haikify!", type="primary", disabled=disabled)
     if btn:
-        print(uploaded_images)
-        print(len(uploaded_images))
+        predictions = classify_images(uploaded_images)
+        for prediction in predictions:
+            st.write(f"**{prediction}**")
 
 
 if __name__ == "__main__":
