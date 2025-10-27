@@ -4,7 +4,7 @@ import io
 import streamlit as st
 from PIL import Image
 
-from haiku_agent import haiku
+from haiku_agent import generate_best_haiku
 from image_classify import classify_images
 
 
@@ -47,8 +47,7 @@ def main():
         with st.spinner("Writing Haiku..."):
             predictions = classify_images(uploaded_images)
 
-            result = asyncio.run(haiku(words=predictions))
-
+            result = asyncio.run(generate_best_haiku(words=predictions))
             newline = "\n"
             st.markdown("---")
             st.markdown("### ✨ Your Haiku")
