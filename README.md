@@ -18,7 +18,7 @@ and AI-powered haiku generation.
 - **Backend**:
   - Python
   - TensorFlow for image classification
-  - Multiple LLMs for haiku generation and evaluation
+  - Multiple LLMs in agentic workflow for haiku generation and evaluation
 - **Async architecture** for fast and scalable responses.
 
 ---
@@ -48,7 +48,12 @@ keras~=3.11.3
 python-dotenv~=1.2.1
 ```
 
-### 3. Run the app
+### 3. Create .env file with openai API key
+```
+OPENAI_API_KEY=123456789
+```
+
+### 4. Run the app
 ```bash
 streamlit run main.py
 ```
