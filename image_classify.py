@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from PIL import Image
 from keras.applications.mobilenet_v2 import (
     MobileNetV2,
     preprocess_input,
@@ -9,22 +10,21 @@ from keras.applications.mobilenet_v2 import (
 MODEL = MobileNetV2(weights="imagenet")
 
 
-def preprocess_image(image):
+def preprocess_image(image: Image) -> np.ndarray:
     img = np.array(image)
     img = cv2.resize(img, (224, 224))
     img = preprocess_input(img)
-    # img = np.expand_dims(img, axis=0)
     return img
 
 
-def classify(image):
+def classify(image: Image) -> list:
     processed_image = preprocess_image(image)
     predictions = MODEL.predict(processed_image)
     decoded_predictions = decode_predictions(predictions, top=3)[0]
     return decoded_predictions
 
 
-def classify_images(image_list):
+def classify_images(image_list: list[Image]) -> list[str]:
     processed_images = [preprocess_image(img) for img in image_list]
     batch = np.array(processed_images)
 

@@ -1,5 +1,6 @@
 import asyncio
 from random import choice
+from typing import Any
 
 from agents import Agent, Runner
 from dotenv import load_dotenv
@@ -52,7 +53,7 @@ def _build_user_prompt_for_haiku(words: list[str]) -> str:
     )
 
 
-def _build_user_prompt_for_judge(haiku_list):
+def _build_user_prompt_for_judge(haiku_list: tuple) -> str:
     haiku1, haiku2 = haiku_list
     return (
         "Compare the following two haikus and decide which one is better. "
@@ -62,7 +63,7 @@ def _build_user_prompt_for_judge(haiku_list):
     )
 
 
-async def haiku(words, model="gpt-5-nano"):
+async def haiku(words: list[str], model: str = "gpt-5-nano"):
     agent = Agent(
         name="Haiku Agent",
         instructions=HAIKU_INSTRUCTIONS,
@@ -73,8 +74,8 @@ async def haiku(words, model="gpt-5-nano"):
     return result.final_output
 
 
-async def haiku_judge(haiku_list):
-    def check_output(output):
+async def haiku_judge(haiku_list: tuple) -> int:
+    def check_output(output: Any) -> bool:
         """ Check whether output is integer 1 or 2 """
         return isinstance(output, int) and output in (1, 2)
 
@@ -92,7 +93,7 @@ async def haiku_judge(haiku_list):
     return choice([1, 2])
 
 
-async def generate_best_haiku(words):
+async def generate_best_haiku(words: list[str]) -> str:
     haiku_list = await asyncio.gather(haiku(words), haiku(words, model="gpt-5-mini"))
     decision = await haiku_judge(haiku_list)
     return haiku_list[decision-1]
