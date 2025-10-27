@@ -25,10 +25,7 @@ def main():
         with col:
             st.write(f"**{i}{['st', 'nd', 'rd'][i - 1]} image**")
             file = st.file_uploader(
-                "Choose an image…",
-                type=["jpg", "jpeg", "png"],
-                key=f"image_{i}",
-                label_visibility="collapsed"
+                "Choose an image…", type=["jpg", "jpeg", "png"], key=f"image_{i}", label_visibility="collapsed"
             )
             if file is not None:
                 try:
@@ -51,11 +48,14 @@ def main():
             newline = "\n"
             st.markdown("---")
             st.markdown("### ✨ Your Haiku")
-            st.markdown(f"""
+            st.markdown(
+                f"""
                     <div style='font-size: 24px; line-height: 1.6; font-style: italic; color: #4B4B4B;'>
                         {result.replace(newline, '<br>')}
                     </div>
-                    """, unsafe_allow_html=True)
+                    """,
+                unsafe_allow_html=True,
+            )
             st.markdown("---")
 
 
