@@ -34,5 +34,6 @@ def classify_images(image_list):
     predictions = []
     for item in decoded:
         _, prediction, _ = item[0]
+        prediction = prediction.replace("_", " ")
         predictions.append(prediction)
     return predictions

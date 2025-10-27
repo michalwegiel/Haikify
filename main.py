@@ -1,13 +1,19 @@
+import asyncio
 import io
 
 import streamlit as st
 from PIL import Image
 
-from image_classify import classify, classify_images
+from haiku_agent import haiku
+from image_classify import classify_images
 
 
 def main():
     st.set_page_config(page_title="Haikify", page_icon="assets/haikify_icon.jfif", layout="centered")
+
+    col1, _ = st.columns([1, 4])
+    with col1:
+        st.image("assets/haikify_icon.jfif", width=60)
 
     st.title("Haikify")
     st.write("Upload three images to proceed.")
@@ -38,9 +44,20 @@ def main():
 
     btn = st.button("Haikify!", type="primary", disabled=disabled)
     if btn:
-        predictions = classify_images(uploaded_images)
-        for prediction in predictions:
-            st.write(f"**{prediction}**")
+        with st.spinner("Writing Haiku..."):
+            predictions = classify_images(uploaded_images)
+
+            result = asyncio.run(haiku(words=predictions))
+
+            newline = "\n"
+            st.markdown("---")
+            st.markdown("### ✨ Your Haiku")
+            st.markdown(f"""
+                    <div style='font-size: 24px; line-height: 1.6; font-style: italic; color: #4B4B4B;'>
+                        {result.replace(newline, '<br>')}
+                    </div>
+                    """, unsafe_allow_html=True)
+            st.markdown("---")
 
 
 if __name__ == "__main__":
