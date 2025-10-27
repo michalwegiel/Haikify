@@ -1,7 +1,9 @@
-# 📜 Haiku Generator
+# 📜 Haikify
 
 A simple web app that generates elegant, original haikus inspired by three images you provide.  
-Built with **Streamlit** for the frontend, **TensorFlow** for image classification, and AI-powered haiku generation.
+Built with **Streamlit** for the frontend, 
+**TensorFlow** for image classification, 
+and AI-powered haiku generation.
 ---
 
 ## ✨ Features
